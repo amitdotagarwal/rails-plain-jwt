@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   skip_before_action :require_login, only: [:create]
   def create
-    user = User.create(user_params) 
+    user = User.create(user_params.merge(role:'user'))
     if user.valid?
         payload = {user_id: user.id}
         token = encode_token(payload)
@@ -15,6 +15,6 @@ class UsersController < ApplicationController
   private 
 
   def user_params
-    params.permit(:phone, :password, :name )
+    params.permit(:phone, :password, :name)
   end
 end

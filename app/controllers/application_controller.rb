@@ -6,13 +6,20 @@ class ApplicationController < ActionController::API
     end
 
     def auth_header
+        puts request.headers['Authorization']
+        puts 'amit'
         request.headers['Authorization']
+       
     end
 
     def decoded_token
         if auth_header
-            token = auth_header.split(' ')[1]
+            token = auth_header.split(' ')[0]
+            puts token
+            puts '90990'
             begin
+                puts JWT.decode(token, 'my_secret', true, algorithm: 'HS256')
+                puts 'agarwal'
                 JWT.decode(token, 'my_secret', true, algorithm: 'HS256')
             rescue JWT::DecodeError
                 []
